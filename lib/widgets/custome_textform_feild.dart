@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 25, right: 25, top: top),
-      padding: const  EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         // color: Palette.primary,
         borderRadius: BorderRadius.circular(18),
@@ -65,17 +65,17 @@ class CustomTextField extends StatelessWidget {
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
           hintText: hint,
-          hintStyle: const  TextStyle(
+          hintStyle: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
           contentPadding:
-             const   EdgeInsets.only(left: 25, right: 25, top: 6, bottom: 6),
+              const EdgeInsets.only(left: 25, right: 25, top: 6, bottom: 6),
           errorMaxLines: 2,
           isDense: true,
         ),
-        style: const  TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           color: Colors.white,
           fontWeight: FontWeight.w400,

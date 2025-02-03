@@ -15,7 +15,7 @@ class   LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      message: json['message'],
+      message: json['message'], 
       homePage: json['home_page'],
       fullName: json['full_name'],
       keyDetails: KeyDetails.fromJson(json['key_details']),

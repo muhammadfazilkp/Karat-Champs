@@ -20,8 +20,11 @@ class LoginViewmodel extends BaseViewModel {
     try {
       loginResponse =
           await runBusyFuture(_apiservice.login(username, passcode));
-      debugPrint('Loginresponse: $loginResponse');
-      notifyListeners();
+      if (loginResponse != null) {
+        isLogedIn = true;
+        debugPrint('Loginresponse: $loginResponse');
+        notifyListeners();
+      }
     } catch (e) {
       throw error(e);
     }
