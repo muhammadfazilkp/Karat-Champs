@@ -3,6 +3,7 @@ import 'package:karatte_kid/app/utils.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/login/login_viewmodel.dart';
+import 'package:karatte_kid/widgets/tost.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -15,91 +16,132 @@ class Loginview extends StatelessWidget {
       onViewModelReady: (viewModel) => viewModel.init(),
       builder: (context, model, _) {
         return Scaffold(
-          // backgroundColor: Colors.black,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Login screen content "),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Center(
-                  child: Form(
-                    key: model.formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Jhone@gmail.com',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[300],
-                              fontSize: 13,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          controller: model.usernameController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            return validateEmail(value);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Hejei84#',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[300],
-                              fontSize: 13,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                model.isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Colors.grey,
-                              ),
-                              onPressed: model.togglePasswordVisibility,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          obscureText: !model.isPasswordVisible,
-                          controller: model.passcodeController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter an email';
-                            }
-                            return null;
-                          },
-                        )
-                      ],
+          body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Welcome to Karate Academy!\nUnlock your journey to mastery.",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.start,
                     ),
-                  ),
+                    const SizedBox(height: 15),
+
+                    const Image(
+                      image: AssetImage('assets/images/karatte.png'),
+                      height: 150,
+                    ),
+                    const SizedBox(height: 45),
+
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Login Your Account',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 19,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Form(
+                      key: model.formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Jhone@gmail.com',
+                              hintStyle: TextStyle(
+                                color: Colors.grey[300],
+                                fontSize: 13,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            controller: model.usernameController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              return validateEmail(value);
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              hintStyle: TextStyle(
+                                color: Colors.grey[300],
+                                fontSize: 13,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  model.isPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: model.togglePasswordVisibility,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            obscureText: !model.isPasswordVisible,
+                            controller: model.passcodeController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    /// **Login Button**
+                    loginButton(
+                      label: "Login",
+                      onPressed: () {
+                        if (model.formKey.currentState!.validate()) {
+                          model.login(
+                            model.usernameController.text.trim(),
+                            model.passcodeController.text.trim(),
+                          );
+                          if (model.isLogedIn!) {
+                            navigationService
+                                .pushNamedAndRemoveUntil(RoutePaths.homeview);
+                          }
+                          showToast(
+                              'Incorrect username or password. Please try again.');
+                        }
+                        model.usernameController.text = '';
+                        model.passcodeController.text = '';
+                      },
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              loginButton(
-                label: "Login",
-                onPressed: () {
-                  if (model.formKey.currentState!.validate()) {
-                    model.login(model.usernameController.text.trim(),
-                        model.passcodeController.text.trim());
-                    navigationService
-                        .pushNamedAndRemoveUntil(RoutePaths.homeview);
-                  }
-                  model.usernameController.text = '';
-                  model.passcodeController.text = '';
-                },
-              ),
-            ],
+            ),
           ),
         );
       },
@@ -127,10 +169,10 @@ Widget loginButton({
       decoration: BoxDecoration(
         border: Border.all(
           width: .2,
-          color: Colors.white, // Border is white for contrast
+          color: Colors.white,
           style: BorderStyle.solid,
         ),
-        borderRadius: BorderRadius.circular(30),
+        // borderRadius: BorderRadius.circular(30),
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

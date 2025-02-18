@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
+import 'package:karatte_kid/ui/home/homeview.dart';
 import 'package:karatte_kid/ui/login/loginview.dart';
 import 'package:karatte_kid/ui/splash/splash_view.dart';
 
@@ -15,6 +16,10 @@ class PageRouter {
       case RoutePaths.splashView:
         return MaterialPageRoute(
             builder: (context) => const SplashView(), settings: settings);
+
+      case RoutePaths.homeview:
+        return MaterialPageRoute(
+            builder: (context) => const Homeview(), settings: settings);
 
       default:
         return MaterialPageRoute(

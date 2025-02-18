@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:karatte_kid/models/login_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//  import 'package:shared_preferences/shared_preferences.dart';
 
 class Apiservice extends ChangeNotifier {
   final String baseUrl = 'https://karate.edusuite.store/';
@@ -33,9 +33,9 @@ class Apiservice extends ChangeNotifier {
         debugPrint("Full response Login : $data ");
         loginResponse = LoginResponse.fromJson(data);
         isLogdin = true;
-        storeUserData(isLogdin!, loginResponse.keyDetails.apiKey,
-            loginResponse.keyDetails.apiSecret);
-            debugPrint('key: ${loginResponse.keyDetails.apiKey}');
+        // storeUserData(isLogdin!, loginResponse.keyDetails.apiKey,
+        //     loginResponse.keyDetails.apiSecret);
+        //     debugPrint('key: ${loginResponse.keyDetails.apiKey}');
         return LoginResponse.fromJson(data);
       } else {
         throw Exception(
@@ -46,11 +46,11 @@ class Apiservice extends ChangeNotifier {
     }
   }
 
-  void storeUserData(bool isLogdin, String? apikey, String? secretKey) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setBool('isLogdin', isLogdin);
-    pref.setString('apiKey', apikey.toString());
-    pref.setString('secretkey', secretKey.toString());
-    notifyListeners();
-  }
+  // void storeUserData(bool isLogdin, String? apikey, String? secretKey) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.setBool('isLogdin', isLogdin);
+  //   pref.setString('apiKey', apikey.toString());
+  //   pref.setString('secretkey', secretKey.toString());
+  //   notifyListeners();
+  // }
 }
