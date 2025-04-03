@@ -9,7 +9,7 @@ class PageRouter {
     switch (settings.name) {
       case RoutePaths.login:
         return MaterialPageRoute(
-          builder: (context) => const Loginview(),
+          builder: (context) => const LoginView(),
           settings: settings,
         );
 
