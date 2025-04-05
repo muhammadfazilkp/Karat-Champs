@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void showToast(
-  String msg, {
+    Future<void> showToast(
+  String msg, {     
   Color? color,
   Color? textColor,
   Toast? toastLength,
-}) {
+}) async {
   Fluttertoast.showToast(
     msg: msg,
     toastLength: toastLength ?? Toast.LENGTH_SHORT,

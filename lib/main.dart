@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/app/provider.dart';
 import 'package:karatte_kid/app/router.dart';
+import 'package:karatte_kid/constant/app_color.dart';
 import 'package:karatte_kid/constant/app_string.dart';
 import 'package:provider/provider.dart';
 import 'constant/app_constant.dart';
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: AppString.appName,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            scaffoldBackgroundColor: Palete.primaryColor,
+            highlightColor: Palete.primaryColor.withOpacity(0.1),
+            splashColor: Palete.primaryColor.withOpacity(0.1),
+            fontFamily: FontFamily.poppins,
             useMaterial3: true,
           ),
           initialRoute: RoutePaths.splashView,

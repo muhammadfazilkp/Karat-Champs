@@ -1,9 +1,9 @@
-class   LoginResponse {
+class LoginResponse {
   final String message;
   final String homePage;
   final String fullName;
   final KeyDetails keyDetails;
-  final List<UserDetails> userDetails;
+  final UserDetails userDetails;
 
   LoginResponse({
     required this.message,
@@ -15,30 +15,28 @@ class   LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      message: json['message'], 
+      message: json['message'],
       homePage: json['home_page'],
       fullName: json['full_name'],
       keyDetails: KeyDetails.fromJson(json['key_details']),
-      userDetails: (json['user_details'] as List)
-          .map((data) => UserDetails.fromJson(data))
-          .toList(),
+      userDetails: UserDetails.fromJson(json['user_details']),
     );
   }
 }
 
 class KeyDetails {
-  final String apiSecret;
   final String apiKey;
+  final String apiSecret;
 
   KeyDetails({
-    required this.apiSecret,
     required this.apiKey,
+    required this.apiSecret,
   });
 
   factory KeyDetails.fromJson(Map<String, dynamic> json) {
     return KeyDetails(
-      apiSecret: json['api_secret'],
       apiKey: json['api_key'],
+      apiSecret: json['api_secret'],
     );
   }
 }
@@ -46,11 +44,12 @@ class KeyDetails {
 class UserDetails {
   final String name;
   final String firstName;
-  final String? lastName;
+  final String lastName;
   final String email;
   final String? mobileNo;
   final String? gender;
   final String? roleProfileName;
+  final int enabled;
 
   UserDetails({
     required this.name,
@@ -60,6 +59,7 @@ class UserDetails {
     this.mobileNo,
     this.gender,
     this.roleProfileName,
+    required this.enabled,
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
@@ -71,6 +71,7 @@ class UserDetails {
       mobileNo: json['mobile_no'],
       gender: json['gender'],
       roleProfileName: json['role_profile_name'],
+      enabled: json['enabled'],
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:karatte_kid/ui/login/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../service/navigation_srvices.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
@@ -21,7 +23,7 @@ class LoginView extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -29,7 +31,7 @@ class LoginView extends StatelessWidget {
                     // Image.asset('karatte_kid/assets/images/log_image.png',
                     // height: 200,),/
                     Image.asset(
-                      'assets/images/log_image.png',
+                      'assets/images/Vector.png',
                       height: 230,
                     ),
 
@@ -80,13 +82,16 @@ class LoginView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontFamily: FontFamily.poppins,
-                              fontWeight: FontWeight.w600,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.2 ),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Palete.primaryColor,
+                                fontSize: 22,
+                                fontFamily: FontFamily.poppins,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -98,7 +103,8 @@ class LoginView extends StatelessWidget {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: 'john@example.com',
+                              hintText: 'email',
+                              // helperText: 'john@gmail.com',
                               hintStyle: TextStyle(
                                 color: Colors.grey[400],
                                 fontSize: 14,
@@ -139,10 +145,38 @@ class LoginView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 15),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Palete.primaryColor,
+                                  fontFamily: FontFamily.poppins,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // const SizedBox(height: 15),
                           loginButton(
-                            label: "Login",
-                            onPressed: () {},
+                            label: "LOGIN",
+                            onPressed: () {
+                              debugPrint('Button Pressed');
+                           
+                              if (model.formKey.currentState!.validate()) {
+                                model.login(
+                                  model.usernameController.text.trim(),
+                                  model.passcodeController.text.trim(),
+                                );
+                                if (model.isLogedIn!) {
+                                  navigationService.pushNamedAndRemoveUntil(
+                                      RoutePaths.homeview);
+                                } 
+                              }
+                            },
                           ),
 
                           // SizedBox(
@@ -182,20 +216,6 @@ class LoginView extends StatelessWidget {
                           //   ),
                           // ),
                           // // const SizedBox(height: 15),
-
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "Forgot Password?",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -286,11 +306,11 @@ Widget loginButton({
               )
             : Text(
                 label,
-                style:  TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   fontFamily: FontFamily.poppins,
-                  color: const  Color(0xffFFFFFF),
+                  color: const Color(0xffFFFFFF),
                 ),
               ),
       ),

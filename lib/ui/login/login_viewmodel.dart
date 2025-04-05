@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:karatte_kid/models/login_model.dart';
 import 'package:karatte_kid/service/apiservice.dart';
+import 'package:karatte_kid/widgets/tost.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
@@ -13,6 +14,7 @@ class LoginViewmodel extends BaseViewModel {
   final passcodeController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool? isLogedIn = false;
+  String errorMessgae = '';
   bool isPasswordVisible = false;
   void init() {}
 
@@ -25,7 +27,12 @@ class LoginViewmodel extends BaseViewModel {
         debugPrint('Loginresponse: $loginResponse');
         notifyListeners();
       }
+     
     } catch (e) {
+      errorMessgae = e.toString();
+      showToast(errorMessgae);
+      debugPrint('Error--------->>>>: $errorMessgae');
+
       throw error(e);
     }
   }
