@@ -1,59 +1,109 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karatte_kid/constant/app_color.dart';
+import 'package:karatte_kid/ui/bottom_nav/bottomnav_viewmodel.dart';
+import 'package:karatte_kid/ui/home/homeview.dart';
+import 'package:karatte_kid/ui/search/serchview.dart';
+import 'package:stacked/stacked.dart';
 
-// class BottmnavView extends StatefulWidget {  
-//   const BottmnavView ({super.key});  
-  
-//   @override  
-//   // ignore: library_private_types_in_public_api
-//   _BottmnavViewState createState() => _BottmnavViewState();  
-// }  
-  
-// class _MyNavigationBarState extends State<BottmnavView > {  
-//   int _selectedIndex = 0;  
-//   static const List<Widget> _widgetOptions = <Widget>[  
-//     Text('Home Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
-//     Text('Search Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
-//     Text('Profile Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
-//   ];  
-  
-//   void _onItemTapped(int index) {  
-//     setState(() {  
-//       _selectedIndex = index;  
-//     });  
-//   }  
-  
-//   @override  
-//   Widget build(BuildContext context) {  
-//     return Scaffold(  
-     
-//       body: Center(  
-//         child: _widgetOptions.elementAt(_selectedIndex),  
-//       ),  
-//       bottomNavigationBar: BottomNavigationBar(  
-//         items: const <BottomNavigationBarItem>[  
-//           BottomNavigationBarItem(  
-//             icon: Icon(Icons.home),  
-//             label: 'Home',  
-//             backgroundColor: Colors.green  
-//           ),  
-//           BottomNavigationBarItem(  
-//             icon: Icon(Icons.search),  
-//             label: 'Search',  
-//             backgroundColor: Colors.yellow  
-//           ),  
-//           BottomNavigationBarItem(  
-//             icon: Icon(Icons.person),  
-//             label: 'Profile',  
-//             backgroundColor: Colors.blue,  
-//           ),  
-//         ],  
-//         type: BottomNavigationBarType.shifting,  
-//         currentIndex: _selectedIndex,  
-//         selectedItemColor: Colors.black,  
-//         iconSize: 40,  
-//         onTap: _onItemTapped,  
-//         elevation: 5  
-//       ),  
-//     );  
-//   }  
-// }  
+class BottomnavView extends StatefulWidget {
+  const BottomnavView({super.key});
+
+  @override
+  State<BottomnavView> createState() => _BottomnavViewState();
+}
+
+class _BottomnavViewState extends State<BottomnavView> {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<BottomnavViewmodel>.reactive(
+      builder: (context, model, child) => Scaffold(
+        body: [
+          const Homeview(),
+          const SearchView(),
+          Container(color: Colors.blue),
+        ][model.currentIndex],
+        bottomNavigationBar: _customBottomNavigationBar(model),
+      ),
+      viewModelBuilder: () => BottomnavViewmodel(),
+    );
+  }
+}
+
+Widget _customBottomNavigationBar(BottomnavViewmodel model) {
+  return Container(
+    height: 69.h,
+    margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          _kGradients[0],
+          _kGradients[1],
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(50.0),
+          topRight: Radius.circular(50.0),
+          bottomLeft: Radius.circular(50.0),
+          bottomRight: Radius.circular(50.0)),
+      boxShadow: [
+        BoxShadow(
+          offset: const Offset(0, -2),
+          blurRadius: 6,
+          color: Colors.black.withOpacity(0.3),
+        ),
+      ],
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: BottomNavigationBar(
+        currentIndex: model.currentIndex,
+        onTap: (index) => model.setCurrentIndex(index),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_filled,
+              color: Colors.black,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.search,
+              color: Colors.black,
+            ),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.profile_circled,
+              color: Colors.black,
+            ),
+            label: 'Settings',
+          ),
+        ],
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Palete.primaryColor,
+        selectedLabelStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 8,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.normal,
+          color: Colors.black,
+          fontSize: 8,
+        ),
+      ),
+    ),
+  );
+}
+
+const List<Color> _kGradients = [
+  Color(0xFFCBCBFE),
+  Color(0xFFFFFFFF),
+];

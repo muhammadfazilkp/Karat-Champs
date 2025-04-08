@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
@@ -35,23 +34,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 25, right: 25, top: top),
+      margin: EdgeInsets.only(left: 20, right: 20, top: top),
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        // color: Palette.primary,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 10,
-            color: Color(0x14FFFFFF),
-            offset: Offset(-6, -6),
-          ),
-          BoxShadow(
-            blurRadius: 15,
-            color: Color(0x2E000000),
-            offset: Offset(8, 8),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(28),
+        // borderRadius: BorderRadius.circular(18),
+      
+        color: const Color.fromARGB(255, 218, 214, 214)
       ),
       child: TextFormField(
         cursorColor: Colors.white,
@@ -61,29 +50,32 @@ class CustomTextField extends StatelessWidget {
         textCapitalization: textCapitalization,
         maxLines: maxLines,
         decoration: InputDecoration(
-          enabledBorder: InputBorder.none,
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18),
+            borderSide: const BorderSide(color: Colors.transparent),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18),
+            borderSide: const BorderSide(color: Colors.transparent),
+          ),
           hintText: hint,
           hintStyle: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
-          contentPadding:
-              const EdgeInsets.only(left: 25, right: 25, top: 6, bottom: 6),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
           errorMaxLines: 2,
           isDense: true,
         ),
         style: const TextStyle(
           fontSize: 16,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.w400,
         ),
         keyboardType: textInputType,
         focusNode: focusNode,
-        textInputAction:
-            nextNode != null ? TextInputAction.next : TextInputAction.done,
+        textInputAction: nextNode != null ? TextInputAction.next : TextInputAction.done,
         validator: validator,
         onSaved: onSaved,
         onChanged: onChanged,

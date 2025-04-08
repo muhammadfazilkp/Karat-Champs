@@ -83,7 +83,7 @@ class LoginView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 16.2 ),
+                            padding: const EdgeInsets.only(left: 16.2),
                             child: Text(
                               "Login",
                               style: TextStyle(
@@ -165,7 +165,7 @@ class LoginView extends StatelessWidget {
                             label: "LOGIN",
                             onPressed: () {
                               debugPrint('Button Pressed');
-                           
+
                               if (model.formKey.currentState!.validate()) {
                                 model.login(
                                   model.usernameController.text.trim(),
@@ -173,49 +173,11 @@ class LoginView extends StatelessWidget {
                                 );
                                 if (model.isLogedIn!) {
                                   navigationService.pushNamedAndRemoveUntil(
-                                      RoutePaths.homeview);
-                                } 
+                                      RoutePaths.bottonav);
+                                }
                               }
                             },
                           ),
-
-                          // SizedBox(
-                          //   width: double.infinity,
-                          //   child: ElevatedButton(
-                          //     onPressed: () {
-                          //       if (model.formKey.currentState!.validate()) {
-                          //         model.login(
-                          //           model.usernameController.text.trim(),
-                          //           model.passcodeController.text.trim(),
-                          //         );
-                          //         if (model.isLogedIn!) {
-                          //           navigationService.pushNamedAndRemoveUntil(
-                          //               RoutePaths.homeview);
-                          //         } else {
-                          //           showToast(
-                          //               'Incorrect username or password. Please try again.');
-                          //         }
-                          //       }
-                          //     },
-                          //     style: ElevatedButton.styleFrom(
-                          //       backgroundColor: Colors.white,
-                          //       padding:
-                          //           const EdgeInsets.symmetric(vertical: 14),
-                          //       shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(15),
-                          //       ),
-                          //     ),
-                          //     child: Text(
-                          //       "Login",
-                          //       style: TextStyle(
-                          //           color: Colors.red,
-                          //           fontSize: 18,
-                          //           fontWeight: FontWeight.bold,
-                          //           fontFamily: FontFamily.poppins),
-                          //     ),
-                          //   ),
-                          // ),
-                          // // const SizedBox(height: 15),
                         ],
                       ),
                     ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karatte_kid/constant/app_color.dart';
+import 'package:karatte_kid/constant/app_constant.dart';
+import 'package:karatte_kid/main.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -6,15 +10,36 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 80,
-            width: 120,
-            color: Colors.amber,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(10, 15, 10, 0),
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.sh),
+                  color: Palete.lightGrey,
+                ),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    suffixIcon: const  Icon(Icons.search,size: 30, color: Color.fromARGB(255, 34, 33, 33),),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      hintText: 'Search..',
+                      hintStyle: TextStyle(
+                          color: const Color.fromARGB(96, 62, 62, 62),
+                          fontFamily: FontFamily.poppins),
+                      border: InputBorder.none),
+                      
+                      
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

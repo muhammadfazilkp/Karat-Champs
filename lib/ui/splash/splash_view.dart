@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karatte_kid/ui/splash/splash_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class SplashView extends StatelessWidget {
@@ -8,8 +9,7 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SplsahViewModel>.reactive(
-      onViewModelReady: (model) =>model.loginCheck() ,
-      
+      onViewModelReady: (model) =>model.init(),
       builder: (context, viewModel, _) {
         return Container(
           height: double.infinity,
@@ -17,7 +17,9 @@ class SplashView extends StatelessWidget {
           color: Colors.amber,
         );
       },
-      viewModelBuilder: () => SplsahViewModel(),
+      viewModelBuilder: () => SplsahViewModel(
+        apiservice: Provider.of(context)
+      ),
     );
   }
 }
