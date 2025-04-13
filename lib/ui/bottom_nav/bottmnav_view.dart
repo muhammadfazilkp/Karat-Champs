@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_color.dart';
 import 'package:karatte_kid/ui/bottom_nav/bottomnav_viewmodel.dart';
 import 'package:karatte_kid/ui/home/homeview.dart';
+import 'package:karatte_kid/ui/profile/profile_view.dart';
 import 'package:karatte_kid/ui/search/serchview.dart';
 import 'package:stacked/stacked.dart';
 
@@ -22,7 +23,7 @@ class _BottomnavViewState extends State<BottomnavView> {
         body: [
           const Homeview(),
           const SearchView(),
-          Container(color: Colors.blue),
+          const ProfileView()
         ][model.currentIndex],
         bottomNavigationBar: _customBottomNavigationBar(model),
       ),

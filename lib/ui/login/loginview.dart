@@ -162,6 +162,7 @@ class LoginView extends StatelessWidget {
                           ),
                           // const SizedBox(height: 15),
                           loginButton(
+                            isBusy: model.isBusy,
                             label: "LOGIN",
                             onPressed: () {
                               debugPrint('Button Pressed');
@@ -176,6 +177,7 @@ class LoginView extends StatelessWidget {
                                       RoutePaths.bottonav);
                                 }
                               }
+                              model.notifyListeners();
                             },
                           ),
                         ],

@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/home/home_viewmodel.dart';
+import 'package:karatte_kid/ui/pyment_status/pyment_status_view.dart';
 import 'package:karatte_kid/widgets/diologs.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-
 class Homeview extends StatelessWidget {
   const Homeview({super.key});
 
@@ -21,14 +21,15 @@ class Homeview extends StatelessWidget {
               toolbarHeight: 70.h,
               leading: Icon(
                 Icons.menu,
-                color: Colors.white,
-                size: 40.sp,
+                color: const Color.fromARGB(255, 184, 177, 177),
+                size: 35.sp,
               ),
               actions: const [
                 Padding(
                   padding: EdgeInsets.only(right: 12),
                   child: CircleAvatar(
                     radius: 20,
+                    backgroundImage: AssetImage('assets/images/Mask group.png'),
                     backgroundColor: Colors.teal,
                   ),
                 )
@@ -168,12 +169,28 @@ class Homeview extends StatelessWidget {
                       ),
                       CustomTabView(
                         onTap: () {
-                          viewModel.logout();
+                          // viewModel.logout();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PymentStatusView(),
+                              ));
                         },
                         icon: Icons.wallet,
                       )
                     ],
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -214,3 +231,6 @@ class CustomTabView extends StatelessWidget {
     );
   }
 }
+
+
+

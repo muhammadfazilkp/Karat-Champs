@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
+import 'package:karatte_kid/models/class_model.dart';
 import 'package:karatte_kid/models/login_model.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/widgets/tost.dart';
@@ -86,13 +87,14 @@ class Apiservice extends ChangeNotifier {
       "instructors": instructors,
     };
     debugPrint('Request Body: ${json.encode(classData)}');
+    String credentials = '$loginKey:$loginSecretKey';
+    debugPrint("Creadintial : $credentials");
 
     Map<String, String> headers = {
-      "Authorization": "Tocken$loginKey:$loginSecretKey",
+      "Authorization": "tocken $credentials",
       'Accept': 'application/json',
       "Content-Type": "application/json",
     };
-    debugPrint("register:$loginKey:$loginSecretKey");
 
     try {
       debugPrint('register: $loginKey:$loginSecretKey');
@@ -158,6 +160,80 @@ class Apiservice extends ChangeNotifier {
   Future<void> forceLogout() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.clear();
+    loginKey = null;
+    loginSecretKey = null;
     navigationService.pushNamedAndRemoveUntil(RoutePaths.login);
+  }
+
+  Future<ClassModel?> getClassDetails() async {
+    ClassModel? classModel;
+    try {
+      Map<String, String> headers = {
+        "Authorization": "token $loginKey:$loginSecretKey",
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      };
+
+      final response = await http.get(
+        Uri.parse("$baseUrl/api/resource/Class"),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        debugPrint('Full Respose Class Details : $jsonData');
+        classModel = ClassModel.fromJson(jsonData);
+      } else {
+        debugPrint(
+            "Failed to load class details. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      debugPrint("Error fetching class details: $e");
+      throw Exception("Failed to fetch class details.");
+    }
+
+    return classModel;
+  }
+
+  Future<bool?> getStudentResorce({
+    required String fullname,
+    required String email,
+    required String phone,
+    required String institute,
+  }) async {
+    bool status = false;
+
+    try {
+      Map<String, String> headers = {
+        "Authorization": "token $loginKey:$loginSecretKey",
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      };
+
+      final body = jsonEncode({
+        "full_name": fullname,
+        "email": email,
+        "phone": phone,
+        "institute": institute,
+      });
+
+      final response = await http.post(
+        Uri.parse("$baseUrl/api/resource/Student"),
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        status = true;
+      } else {
+        debugPrint(
+            "Failed to post student resource. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      debugPrint("Error: $e");
+      throw Exception("Failed to create student resource");
+    }
+
+    return status;
   }
 }
