@@ -6,6 +6,8 @@ import 'package:karatte_kid/ui/student_entrolling/student_entroling_viewmodel.da
 import 'package:karatte_kid/widgets/custome_textform_feild.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+
+import '../register/register_view.dart';
 class StudentEntrolingView extends StatelessWidget {
   const StudentEntrolingView({super.key});
 
@@ -87,6 +89,7 @@ class StudentEntrolingView extends StatelessWidget {
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
+                        
                           CustomTextField(
                             hint: 'Class Name',
                             controller: model.className,

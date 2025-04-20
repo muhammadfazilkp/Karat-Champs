@@ -19,11 +19,9 @@ class LoginViewmodel extends BaseViewModel {
 
   Future<void> login(String username, String passcode) async {
     loginResponse = await runBusyFuture(_apiservice.login(username, passcode));
-    if (loginResponse != null) {
-      isLogedIn = true;
-      debugPrint('Loginresponse: $loginResponse');
-      notifyListeners();
-    }
+    isLogedIn = true;
+    debugPrint('Loginresponse: $loginResponse');
+    notifyListeners();
   }
 
   getUserData(bool isLogdin, String? logkey, String? secretKey) async {

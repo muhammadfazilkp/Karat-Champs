@@ -4,9 +4,11 @@ import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/home/home_viewmodel.dart';
 import 'package:karatte_kid/ui/pyment_status/pyment_status_view.dart';
+import 'package:karatte_kid/ui/register/register_view.dart';
 import 'package:karatte_kid/widgets/diologs.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+
 class Homeview extends StatelessWidget {
   const Homeview({super.key});
 
@@ -19,10 +21,15 @@ class Homeview extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               toolbarHeight: 70.h,
-              leading: Icon(
-                Icons.menu,
-                color: const Color.fromARGB(255, 184, 177, 177),
-                size: 35.sp,
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const  RegisterView(),));
+                },
+                child: Icon(
+                  Icons.menu,
+                  color: const Color.fromARGB(255, 184, 177, 177),
+                  size: 35.sp,
+                ),
               ),
               actions: const [
                 Padding(
@@ -188,7 +195,6 @@ class Homeview extends StatelessWidget {
                         color: Colors.white.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                    
                     ),
                   ),
                 ],
@@ -231,6 +237,3 @@ class CustomTabView extends StatelessWidget {
     );
   }
 }
-
-
-

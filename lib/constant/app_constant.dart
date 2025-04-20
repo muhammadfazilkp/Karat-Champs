@@ -4,6 +4,7 @@ abstract class RoutePaths {
   static const String splashView = '/splashView';
   static const String bottonav = 'bottomNav';
   static const String studentView = 'studentView';
+  static const String studentListView = "studentListView";
 }
 
 abstract class FontFamily {

@@ -164,17 +164,26 @@ class LoginView extends StatelessWidget {
                           loginButton(
                             isBusy: model.isBusy,
                             label: "LOGIN",
-                            onPressed: () {
+                            onPressed: () async {
+                              if (model.isBusy) return;
+
                               debugPrint('Button Pressed');
 
                               if (model.formKey.currentState!.validate()) {
-                                model.login(
-                                  model.usernameController.text.trim(),
-                                  model.passcodeController.text.trim(),
-                                );
-                                if (model.isLogedIn!) {
-                                  navigationService.pushNamedAndRemoveUntil(
-                                      RoutePaths.bottonav);
+                                model.setBusy(true);
+                                try {
+                                  await model.login(
+                                    model.usernameController.text.trim(),
+                                    model.passcodeController.text.trim(),
+                                  );
+                                  if (model.isLogedIn!) {
+                                    navigationService.pushNamedAndRemoveUntil(
+                                        RoutePaths.bottonav);
+                                  }
+                                } catch (e) {
+                                  debugPrint('Login failed: $e');
+                                } finally {
+                                  model.setBusy(false);
                                 }
                               }
                               model.notifyListeners();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
@@ -34,14 +35,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: top),
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.only(left: 5.0, right: 5.0, top: top),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        // borderRadius: BorderRadius.circular(18),
-      
-        color: const Color.fromARGB(255, 218, 214, 214)
-      ),
+          borderRadius: BorderRadius.circular(28),
+          // borderRadius: BorderRadius.circular(18),
+
+          color: const Color.fromARGB(255, 218, 214, 214)),
       child: TextFormField(
         cursorColor: Colors.white,
         readOnly: readOnly,
@@ -64,7 +64,8 @@ class CustomTextField extends StatelessWidget {
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
           errorMaxLines: 2,
           isDense: true,
         ),
@@ -75,7 +76,8 @@ class CustomTextField extends StatelessWidget {
         ),
         keyboardType: textInputType,
         focusNode: focusNode,
-        textInputAction: nextNode != null ? TextInputAction.next : TextInputAction.done,
+        textInputAction:
+            nextNode != null ? TextInputAction.next : TextInputAction.done,
         validator: validator,
         onSaved: onSaved,
         onChanged: onChanged,

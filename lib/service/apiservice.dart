@@ -86,19 +86,18 @@ class Apiservice extends ChangeNotifier {
       },
       "instructors": instructors,
     };
+
     debugPrint('Request Body: ${json.encode(classData)}');
-    String credentials = '$loginKey:$loginSecretKey';
-    debugPrint("Creadintial : $credentials");
+
+    String token = '$loginKey:$loginSecretKey';
 
     Map<String, String> headers = {
-      "Authorization": "tocken $credentials",
+      "Authorization": "Token $token",
       'Accept': 'application/json',
       "Content-Type": "application/json",
     };
 
     try {
-      debugPrint('register: $loginKey:$loginSecretKey');
-
       final response = await http.post(
         Uri.parse(
             '$baseUrl/api/method/institute.institute.api.class.create_or_update_class_with_instructors'),
@@ -108,12 +107,15 @@ class Apiservice extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         debugPrint('Instructors registered successfully');
+        debugPrint("Full Response ---> : ${response.body}");
       } else {
         debugPrint('Failed to register instructors: ${response.statusCode}');
         debugPrint('Response: ${response.body}');
+        throw Exception('API Error: ${response.body}');
       }
     } catch (e) {
       debugPrint('Error: $e');
+      throw Exception('Network Error: $e');
     }
   }
 
@@ -168,6 +170,7 @@ class Apiservice extends ChangeNotifier {
   Future<ClassModel?> getClassDetails() async {
     ClassModel? classModel;
     try {
+      debugPrint("token : $loginKey:$loginSecretKey");
       Map<String, String> headers = {
         "Authorization": "token $loginKey:$loginSecretKey",
         'Accept': 'application/json',
@@ -204,6 +207,7 @@ class Apiservice extends ChangeNotifier {
     bool status = false;
 
     try {
+      debugPrint('Apikey&Scret:  $loginKey  secretKey:$loginSecretKey ');
       Map<String, String> headers = {
         "Authorization": "token $loginKey:$loginSecretKey",
         'Accept': 'application/json',
@@ -223,11 +227,13 @@ class Apiservice extends ChangeNotifier {
         body: body,
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200) {
+        debugPrint("Resgister Full Response : ---> ${response.body}");
         status = true;
       } else {
         debugPrint(
             "Failed to post student resource. Status code: ${response.statusCode}");
+        debugPrint('Response: ${response.body}');
       }
     } catch (e) {
       debugPrint("Error: $e");

@@ -4,6 +4,7 @@ import 'package:karatte_kid/ui/home/homeview.dart';
 import 'package:karatte_kid/ui/login/loginview.dart';
 import 'package:karatte_kid/ui/splash/splash_view.dart';
 import 'package:karatte_kid/ui/student_entrolling/student_entroling_view.dart';
+import 'package:karatte_kid/ui/class_view/class_view.dart';
 
 import '../ui/bottom_nav/bottmnav_view.dart';
 
@@ -32,6 +33,10 @@ class PageRouter {
         return MaterialPageRoute(
             builder: (context) => const StudentEntrolingView(),
             settings: settings);
+
+      case RoutePaths.studentListView:
+        return MaterialPageRoute(
+            builder: (context) => const ClassView(), settings: settings);
 
       default:
         return MaterialPageRoute(
