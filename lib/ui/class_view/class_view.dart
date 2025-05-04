@@ -19,7 +19,7 @@ class ClassView extends StatelessWidget {
             toolbarHeight: 70.sp,
             backgroundColor: Colors.transparent,
             title: Text(
-              "Class List View",
+              "Institute View",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.sp,
@@ -43,7 +43,7 @@ class ClassView extends StatelessWidget {
               : viewModel.classModel == null
                   ? const Center(
                       child: Text(
-                      'No classes found',
+                      'No Institute found',
                       style: TextStyle(color: Colors.white),
                     ))
                   : Column(

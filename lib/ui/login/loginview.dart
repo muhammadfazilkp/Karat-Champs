@@ -31,8 +31,8 @@ class LoginView extends StatelessWidget {
                     // Image.asset('karatte_kid/assets/images/log_image.png',
                     // height: 200,),/
                     Image.asset(
-                      'assets/images/Vector.png',
-                      height: 230,
+                      'assets/images/log_image__1.png',
+                      height: 250,
                     ),
 
                     const SizedBox(height: 20),

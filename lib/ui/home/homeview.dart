@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
@@ -17,49 +18,68 @@ class Homeview extends StatelessWidget {
     return ViewModelBuilder<HomeViewmodel>.reactive(
       onViewModelReady: (viewmodel) => viewmodel.init(),
       builder: (context, viewModel, child) {
-        return SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 70.h,
-              leading: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const  RegisterView(),));
-                },
-                child: Icon(
-                  Icons.menu,
-                  color: const Color.fromARGB(255, 184, 177, 177),
-                  size: 35.sp,
-                ),
+        return Scaffold(
+          body: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/background_image.png'),
+                fit: BoxFit.cover,
               ),
-              actions: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 12),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('assets/images/Mask group.png'),
-                    backgroundColor: Colors.teal,
-                  ),
-                )
-              ],
-              centerTitle: true,
-              backgroundColor: Colors.transparent,
             ),
-            body: SingleChildScrollView(
+            child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
+                  AppBar(
+                    toolbarHeight: 70.h,
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterView(),
+                          ),
+                        );
+                      },
+                      child: Icon(
+                        Icons.menu,
+                        color: const Color.fromARGB(255, 184, 177, 177),
+                        size: 35.sp,
+                      ),
+                    ),
+                    actions: const [
+                      Padding(
+                        padding: EdgeInsets.only(right: 12),
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                              AssetImage('assets/images/Mask group.png'),
+                          backgroundColor: Colors.teal,
+                        ),
+                      )
+                    ],
+                    centerTitle: true,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.3),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        "Hello Instructor",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
+                      child: GestureDetector(
+                        onTap: () {
+                          navigationService.pushNamed(RoutePaths.studentListView);
+                        },
+                        child: Text(
+                          "Hello Instructor",
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -73,28 +93,26 @@ class Homeview extends StatelessWidget {
                         height: 145.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(255, 143, 105, 105),
-                            gradient: const LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Color.fromARGB(255, 145, 147, 154),
-                                Color.fromARGB(255, 178, 178, 189),
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ]),
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                            top: 40,
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color.fromARGB(255, 145, 147, 154),
+                              Color.fromARGB(255, 178, 178, 189),
+                            ],
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            )
+                          ],
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 40),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -151,51 +169,38 @@ class Homeview extends StatelessWidget {
                     children: [
                       CustomTabView(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return createClassDiolog(
-                                context: context,
-                              );
-                            },
-                          );
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return createClassDiolog(
+                          //       context: context,
+                          //     );
+                          //   },
+                          // );
+                          navigationService.pushNamed(RoutePaths.studentListView);
                         },
                         icon: Icons.people,
                       ),
-                      const SizedBox(
-                        width: 25,
-                      ),
+                      const SizedBox(width: 25),
                       CustomTabView(
                         onTap: () {
                           navigationService.pushNamed(RoutePaths.studentView);
                         },
-                        icon: Icons.private_connectivity_outlined,
+                        icon: Icons.workspace_premium,
                       ),
-                      const SizedBox(
-                        width: 25,
-                      ),
+                      const SizedBox(width: 25),
                       CustomTabView(
                         onTap: () {
-                          // viewModel.logout();
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PymentStatusView(),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PymentStatusView(),
+                            ),
+                          );
                         },
-                        icon: Icons.wallet,
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
+                        icon: Icons.account_balance_wallet,
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -224,8 +229,22 @@ class CustomTabView extends StatelessWidget {
       child: Container(
         height: 54,
         width: 54,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.white),
+        decoration: BoxDecoration(boxShadow: const [
+          BoxShadow(
+            color: Colors.transparent,
+            offset: Offset(4, 4),
+            blurRadius: 3,
+            blurStyle: BlurStyle.outer,
+            spreadRadius: 0.2,
+          ),
+          BoxShadow(
+            color: Colors.transparent,
+            offset: Offset(4, 4),
+            blurRadius: 3,
+            blurStyle: BlurStyle.outer,
+            spreadRadius: 0.2,
+          )
+        ], borderRadius: BorderRadius.circular(19), color: Colors.white),
         child: Center(
           child: Icon(
             icon,
@@ -237,3 +256,73 @@ class CustomTabView extends StatelessWidget {
     );
   }
 }
+
+
+
+
+// class DataItem {
+//   int x;
+//   double y1;
+//   double y2;
+//   double y3;
+//   DataItem(
+//       {required this.x, required this.y1, required this.y2, required this.y3});
+// }
+// class GraphPage extends StatelessWidget {
+//     GraphPage({super.key});
+//   // Generate dummy data to feed the chart
+//   final List<DataItem> _myData = List.generate(
+//       30,
+//       (index) => DataItem(
+//             x: index,
+//             y1: index.toDouble(),
+//             y2: (index * 2).toDouble(),
+//             y3: (index * 3).toDouble(),
+//           ));
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('KindaCode.com'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(30),
+//         child: BarChart(BarChartData(
+//             borderData: FlBorderData(
+//                 border: const Border(
+//               top: BorderSide.none,
+//               right: BorderSide.none,
+//               left: BorderSide(width: 1),
+//               bottom: BorderSide(width: 1),
+//             )),
+//             groupsSpace: 10,
+//             barGroups: [
+//                 BarChartGroupData(x: 1, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 10, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 2, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 10, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 3, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 15, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 4, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 10, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 5, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 11, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 6, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 10, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 7, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 10, width: 15, color: Colors.amber),
+//               ]),
+//                 BarChartGroupData(x: 8, barRods: [
+//                 BarChartRodData(fromY: 0, toY: 10, width: 15, color: Colors.amber),
+//               ]),
+//             ])),
+//             ),
+//         );
+//     }
+// }

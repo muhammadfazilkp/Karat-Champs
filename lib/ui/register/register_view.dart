@@ -58,7 +58,7 @@ class RegisterView extends StatelessWidget {
                       height: 20,
                     ),
                     CustomTextfileld(
-                      hintText: 'Full name',
+                      hintText: 'Name',
                       type: TextInputType.streetAddress,
                       controller: model.fullname,
                     ),
@@ -66,7 +66,7 @@ class RegisterView extends StatelessWidget {
                       height: 10.sp,
                     ),
                     CustomTextfileld(
-                      hintText: 'G-mail',
+                      hintText: 'E-mail',
                       type: TextInputType.emailAddress,
                       controller: model.email,
                       validator: (email) {
@@ -98,7 +98,7 @@ class RegisterView extends StatelessWidget {
                           ),
                         );
                       },
-                      hintText: 'Institute',
+                      hintText: 'Select Institute',
                       type: TextInputType.streetAddress,
                       controller: model.institute,
                     ),

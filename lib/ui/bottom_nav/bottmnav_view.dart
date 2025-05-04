@@ -20,6 +20,8 @@ class _BottomnavViewState extends State<BottomnavView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<BottomnavViewmodel>.reactive(
       builder: (context, model, child) => Scaffold(
+        backgroundColor: Colors.transparent,
+        extendBody: true,
         body: [
           const Homeview(),
           const SearchView(),

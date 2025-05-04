@@ -9,17 +9,18 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SplsahViewModel>.reactive(
-      onViewModelReady: (model) =>model.init(),
+      onViewModelReady: (model) => model.init(),
       builder: (context, viewModel, _) {
         return Container(
           height: double.infinity,
           width: double.infinity,
-          color: Colors.amber,
+          color: Colors.white,
+          child: Center(
+            child: Image.asset('assets/images/log_image.png'),
+          ),
         );
       },
-      viewModelBuilder: () => SplsahViewModel(
-        apiservice: Provider.of(context)
-      ),
+      viewModelBuilder: () => SplsahViewModel(apiservice: Provider.of(context)),
     );
   }
 }
