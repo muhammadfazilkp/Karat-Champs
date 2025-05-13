@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_color.dart';
 import 'package:karatte_kid/ui/bottom_nav/bottomnav_viewmodel.dart';
+import 'package:karatte_kid/ui/class_view/class_view.dart';
 import 'package:karatte_kid/ui/home/homeview.dart';
 import 'package:karatte_kid/ui/profile/profile_view.dart';
 import 'package:karatte_kid/ui/search/serchview.dart';
@@ -24,7 +25,7 @@ class _BottomnavViewState extends State<BottomnavView> {
         extendBody: true,
         body: [
           const Homeview(),
-          const SearchView(),
+          const ClassView(),
           const ProfileView()
         ][model.currentIndex],
         bottomNavigationBar: _customBottomNavigationBar(model),
@@ -61,7 +62,7 @@ Widget _customBottomNavigationBar(BottomnavViewmodel model) {
       ],
     ),
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10,),
       child: BottomNavigationBar(
         currentIndex: model.currentIndex,
         onTap: (index) => model.setCurrentIndex(index),
@@ -77,14 +78,14 @@ Widget _customBottomNavigationBar(BottomnavViewmodel model) {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.search,
+              CupertinoIcons.person_2,
               color: Colors.black,
             ),
-            label: 'Search',
+            label: 'Institutes',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.profile_circled,
+              CupertinoIcons.settings,
               color: Colors.black,
             ),
             label: 'Settings',

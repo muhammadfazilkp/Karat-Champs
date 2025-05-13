@@ -19,183 +19,191 @@ class LoginView extends StatelessWidget {
       builder: (context, model, _) {
         return Scaffold(
           backgroundColor: Palete.primaryColor,
-          body: Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    // Image.asset('karatte_kid/assets/images/log_image.png',
-                    // height: 200,),/
-                    Image.asset(
-                      'assets/images/log_image__1.png',
-                      height: 250,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Hello!",
-                        style: TextStyle(
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: Column(
+              children: [
+                // Top section with logo and welcome text
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      Image.asset(
+                        'assets/images/log_image__1.png',
+                        height: 200, // Reduced height to give more space
+                      ),
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Hello!",
+                          style: TextStyle(
                             fontFamily: FontFamily.poppins,
                             fontSize: 24.sp,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Welcome to Company name ",
-                        style: TextStyle(
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Welcome to Company name",
+                          style: TextStyle(
                             fontFamily: FontFamily.poppins,
                             fontSize: 16.sp,
                             color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.start,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  decoration: const BoxDecoration(
-                    color: Palete.lightGrey,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
-                    ),
+                    ],
                   ),
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: model.formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.2),
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Palete.primaryColor,
-                                fontSize: 22,
-                                fontFamily: FontFamily.poppins,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
+                ),
 
-                          TextFormField(
-                            controller: model.usernameController,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) => validateEmail(value),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'email',
-                              // helperText: 'john@gmail.com',
-                              hintStyle: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(35),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-
-                          TextFormField(
-                            controller: model.passcodeController,
-                            obscureText: !model.isPasswordVisible,
-                            validator: (value) => value!.isEmpty
-                                ? 'Please enter a password'
-                                : null,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Password',
-                              hintStyle: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  model.isPasswordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey,
-                                  size: 18,
-                                ),
-                                onPressed: model.togglePasswordVisibility,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(35),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {},
+                // Form section
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    decoration: const BoxDecoration(
+                      color: Palete.lightGrey,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30), // Reduced radius
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: model.formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, bottom: 16),
                               child: Text(
-                                "Forgot Password?",
+                                "Login",
                                 style: TextStyle(
-                                  decoration: TextDecoration.underline,
                                   color: Palete.primaryColor,
+                                  fontSize: 22,
                                   fontFamily: FontFamily.poppins,
-                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                          ),
-                          // const SizedBox(height: 15),
-                          loginButton(
-                            isBusy: model.isBusy,
-                            label: "LOGIN",
-                            onPressed: () async {
-                              if (model.isBusy) return;
 
-                              debugPrint('Button Pressed');
+                            // Email field
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: TextFormField(
+                                controller: model.usernameController,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) => validateEmail(value),
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 16),
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontSize: 14,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(35),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
 
-                              if (model.formKey.currentState!.validate()) {
-                                model.setBusy(true);
-                                try {
-                                  await model.login(
-                                    model.usernameController.text.trim(),
-                                    model.passcodeController.text.trim(),
-                                  );
-                                  if (model.isLogedIn!) {
-                                    navigationService.pushNamedAndRemoveUntil(
-                                        RoutePaths.bottonav);
+                            // Password field
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: TextFormField(
+                                controller: model.passcodeController,
+                                obscureText: !model.isPasswordVisible,
+                                validator: (value) => value!.isEmpty
+                                    ? 'Please enter a password'
+                                    : null,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 16),
+                                  hintText: 'Password',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontSize: 14,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      model.isPasswordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.grey,
+                                      size: 20,
+                                    ),
+                                    onPressed: model.togglePasswordVisibility,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(35),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Forgot password
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Palete.primaryColor,
+                                    fontFamily: FontFamily.poppins,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // Login button
+                            SizedBox(
+                              width: double.infinity,
+                              child: loginButton(
+                                isBusy: model.isBusy,
+                                label: "LOGIN",
+                                onPressed: () async {
+                                  if (model.isBusy) return;
+                                  if (model.formKey.currentState!.validate()) {
+                                    model.setBusy(true);
+                                    await model.login(
+                                      model.usernameController.text.trim(),
+                                      model.passcodeController.text.trim(),
+                                    );
                                   }
-                                } catch (e) {
-                                  debugPrint('Login failed: $e');
-                                } finally {
-                                  model.setBusy(false);
-                                }
-                              }
-                              model.notifyListeners();
-                            },
-                          ),
-                        ],
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -230,11 +238,11 @@ Widget loginButton({
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: const [0, 0.5, 1],
+          stops: [0, 0.5, 1],
           colors: [
             Palete.primaryColor,
             Palete.primaryColor,
-            Palete.primaryColor
+            Palete.primaryColor,
           ],
         ),
       ),

@@ -3,21 +3,35 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/login/loginview.dart';
-import 'package:karatte_kid/ui/student_entrolling/student_entroling_viewmodel.dart';
+import 'package:karatte_kid/ui/institute_entrolling/institute_entroling_viewmodel.dart';
 import 'package:karatte_kid/widgets/custome_textform_feild.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-
 
 class StudentEntrolingView extends StatelessWidget {
   const StudentEntrolingView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<StudentEntrolingViewmodel>.reactive(
+    return ViewModelBuilder<StudentEnrollingViewmodel>.reactive(
       onViewModelReady: (viewModel) => viewModel.init(),
       builder: (context, model, child) {
         return Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 70.sp,
+            backgroundColor: Colors.transparent,
+            
+            leading: IconButton(
+                onPressed: () {
+                  navigationService.goBack(result: false);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  size: 25,
+                  color: Colors.white,
+                )),
+
+          ),
           body: SafeArea(
             child: Column(
               children: [
@@ -25,25 +39,34 @@ class StudentEntrolingView extends StatelessWidget {
                   height: 250,
                   width: double.infinity,
                   color: Colors.transparent,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Hello',
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: FontFamily.poppins,
-                          color: Colors.white,
-                        ),
+                      const Center(
+                          child: Image(
+                        image: AssetImage('assets/images/Vector.png'),
+                        height: 130,
+                      )),
+                      const SizedBox(
+                        height: 10,
                       ),
+                      // Text(
+                      //   'Hello',
+                      //   style: TextStyle(
+                      //     fontSize: 24.sp,
+                      //     fontWeight: FontWeight.w600,
+                      //     fontFamily: FontFamily.poppins,
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
                       Text(
                         "Enroll the Institute",
                         style: TextStyle(
                           fontSize: 17.sp,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontFamily: FontFamily.poppins,
                           color: Colors.white,
                         ),
@@ -51,13 +74,13 @@ class StudentEntrolingView extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 Expanded(
                   child: Container(
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(24)),
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 10,
@@ -84,18 +107,9 @@ class StudentEntrolingView extends StatelessWidget {
                             CustomTextField(
                               hint: 'Instructor Email',
                               top: 1,
-                              controller: model.instrectorEmail,
+                              controller: model.instructorEmail,
                               focusNode: FocusNode(),
                               textInputType: TextInputType.emailAddress,
-                              onSaved: (newValue) {},
-                            ),
-                            const SizedBox(height: 10),
-                            CustomTextField(
-                              hint: 'Instructor Name',
-                              top: 1,
-                              controller: model.instrectorName,
-                              focusNode: FocusNode(),
-                              textInputType: TextInputType.name,
                               onSaved: (newValue) {},
                             ),
                             const SizedBox(height: 10),
@@ -107,29 +121,46 @@ class StudentEntrolingView extends StatelessWidget {
                               textInputType: TextInputType.phone,
                               onSaved: (newValue) {},
                             ),
-                            const SizedBox(height: 20),
-                            model.isBusy
-                                ? const CircularProgressIndicator()
-                                : Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: loginButton(
-                                      label: "Enroll",
-                                      onPressed: () {
-                                        if (model.className.text.isEmpty ||
-                                            model.instrectorName.text.isEmpty ||
-                                            model.instrectorEmail.text.isEmpty) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text('All fields must be filled!'),
-                                            ),
-                                          );
-                                        } else {
-                                          model.registerInstructors();
-                                          navigationService.goBack(result: true);
-                                        }
-                                      },
-                                    ),
+                            const SizedBox(height: 15),
+                            Container(
+                              height: 120.h,
+                              width: double.infinity,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 12.4),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Add your  address....',
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.all(10),
                                 ),
+                                maxLines: 4,
+                              ),
+                            ),
+
+                            // CustomTextField(
+                            //   hint: 'Instructor adrres',
+                            //   top: 1,
+                            //   controller: model.address,
+                            //   focusNode: FocusNode(),
+                            //   textInputType: TextInputType.name,
+                            //   onSaved: (newValue) {},
+                            // ),
+
+                            const SizedBox(height: 20),
+
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: loginButton(
+                                label: "Enroll",
+                                onPressed: () {
+                                  model.registerInstructors(context);
+                                  navigationService.goBack(result: true);
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -142,7 +173,7 @@ class StudentEntrolingView extends StatelessWidget {
         );
       },
       viewModelBuilder: () =>
-          StudentEntrolingViewmodel(apiservice: Provider.of(context)),
+          StudentEnrollingViewmodel(apiservice: Provider.of(context)),
     );
   }
 }

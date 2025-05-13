@@ -1,14 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/home/home_viewmodel.dart';
-import 'package:karatte_kid/ui/pyment_status/pyment_status_view.dart';
-import 'package:karatte_kid/ui/register/register_view.dart';
-import 'package:karatte_kid/widgets/diologs.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+
 
 class Homeview extends StatelessWidget {
   const Homeview({super.key});
@@ -34,14 +31,7 @@ class Homeview extends StatelessWidget {
                   AppBar(
                     toolbarHeight: 70.h,
                     leading: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterView(),
-                          ),
-                        );
-                      },
+                      onTap: () {},
                       child: Icon(
                         Icons.menu,
                         color: const Color.fromARGB(255, 184, 177, 177),
@@ -70,10 +60,11 @@ class Homeview extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: GestureDetector(
                         onTap: () {
-                          navigationService.pushNamed(RoutePaths.studentListView);
+                          // navigationService
+                          //     .pushNamed(RoutePaths.studentListView);
                         },
                         child: Text(
-                          "Hello Instructor",
+                          "Hello ${viewModel.user?.firstName}",
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w600,
@@ -177,31 +168,96 @@ class Homeview extends StatelessWidget {
                           //     );
                           //   },
                           // );
-                          navigationService.pushNamed(RoutePaths.studentListView);
+                          navigationService
+                              .pushNamed(RoutePaths.studentListView);
                         },
                         icon: Icons.people,
                       ),
                       const SizedBox(width: 25),
                       CustomTabView(
                         onTap: () {
-                          navigationService.pushNamed(RoutePaths.studentView);
+                          // navigationService.pushNamed(RoutePaths.studentView);
                         },
                         icon: Icons.workspace_premium,
                       ),
                       const SizedBox(width: 25),
                       CustomTabView(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PymentStatusView(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const PymentStatusView(),
+                          //   ),
+                          // );
                         },
                         icon: Icons.account_balance_wallet,
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 26,
+                  ),
+                  viewModel.user?.isAdmin == true
+                      ? Container(
+                        margin:
+                            const EdgeInsets.symmetric(horizontal: 10,),
+                        height: 50.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                // blurRadius: 1,
+                                offset: const Offset(0, 3),
+                                color: Colors.grey.withOpacity(0.3),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(1),
+                            color: Colors.white),
+                        child: TextButton.icon(
+                          icon: const Icon(Icons.person_add),
+                          onPressed: () {
+                            navigationService.pushNamed(
+                                RoutePaths.studentRegistrationView);
+                          },
+                          label: Text(
+                            "Add Instrector",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: FontFamily.poppins,
+                                fontSize: 9),
+                          ),
+                        ),
+                      )
+                      : Container(
+                        margin:
+                            const EdgeInsets.symmetric(horizontal: 10,),
+                        height: 50.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                // blurRadius: 1,
+                                offset: const Offset(0, 3),
+                                color: Colors.grey.withOpacity(0.3),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(1),
+                            color: Colors.white),
+                        child: TextButton.icon(
+                          icon: const Icon(Icons.person_add),
+                          onPressed: () {
+                            navigationService.pushNamed(
+                                RoutePaths.studentView);
+                          },
+                          label: Text(
+                            "Entroll Student",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: FontFamily.poppins,
+                                fontSize: 9),
+                          ),
+                        ),
+                      ),
                 ],
               ),
             ),

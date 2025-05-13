@@ -25,8 +25,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: AppString.appName,
           theme: ThemeData(
-            scaffoldBackgroundColor: Palete.primaryColor,
-            highlightColor: Palete.primaryColor.withOpacity(0.1),
+                        scaffoldBackgroundColor: Palete.primaryColor,
+
+                        highlightColor: Palete.primaryColor.withOpacity(0.1),
             splashColor: Palete.primaryColor.withOpacity(0.1),
             fontFamily: FontFamily.poppins,
             useMaterial3: true,

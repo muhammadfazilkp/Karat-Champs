@@ -6,6 +6,8 @@ import 'package:karatte_kid/ui/profile/profile_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../widgets/diologs.dart';
+
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
@@ -23,188 +25,110 @@ class ProfileView extends StatelessWidget {
                 color: Colors.white,
                 size: 24,
               ),
-              onPressed: () {
-                // debugPrint("Button Press..");
-                model.goHome();
-              },
+              onPressed: model.goHome,
             ),
-            title: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Profile',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.poppins,
-                ),
+            title: Text(
+              'Profile',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.poppins,
               ),
             ),
             centerTitle: true,
             elevation: 0,
           ),
           body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 40.h),
-
-                Container(
-                  height: 120.w,
-                  width: 120.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Palete.lightGrey,
-                    border: Border.all(
-                      color: Palete.primaryColor,
-                      width: 2.w,
-                    ),
-                  ),
-                  child: Icon(
-                    Icons.person,
-                    size: 50.w,
-                    color: Colors.white,
-                  ),
+                _buildMenuButton(
+                  icon: Icons.privacy_tip_outlined,
+                  text: 'Privacy Policy',
+                  onTap: () {},
                 ),
-
-                SizedBox(height: 20.h),
-
-                Text(
-                  'John Doe',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: FontFamily.poppins,
-                  ),
-                ),
-
-                SizedBox(height: 30.h),
-
-                // Section Title
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'General Information',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: FontFamily.poppins,
-                    ),
-                  ),
-                ),
-
                 SizedBox(height: 15.h),
-
-                // Details List
-                Column(
-                  children: [
-                    const DetailWidget(
-                      icon: Icons.person_outline,
-                      text: 'Instructor: Master Chen',
-                    ),
-                    SizedBox(height: 10.h),
-                    const DetailWidget(
-                      icon: Icons.cake_outlined,
-                      text: 'Age: 13 years',
-                    ),
-                    SizedBox(height: 10.h),
-                    const DetailWidget(
-                      icon: Icons.transgender,
-                      text: 'Gender: Male',
-                    ),
-                    SizedBox(height: 10.h),
-                    const DetailWidget(
-                      icon: Icons.phone,
-                      text: 'Contact: +1 234 567 890',
-                    ),
-                    SizedBox(height: 10.h),
-                    const DetailWidget(
-                      icon: Icons.workspace_premium,
-                      text: 'Belt: Red',
-                      iconColor: Colors.red,
-                    ),
-                  ],
+                _buildMenuButton(
+                  icon: Icons.info_outline,
+                  text: 'About App',
+                  onTap: () {},
                 ),
-
+                SizedBox(height: 15.h),
+                _buildMenuButton(
+                  icon: Icons.description_outlined,
+                  text: 'Terms & Conditions',
+                  onTap: () {},
+                ),
                 SizedBox(height: 40.h),
-
                 SizedBox(
-                  width: 150.w,
+                  width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: model.logout,
+                    onPressed: () {
+                      showDialog(context: context, builder: (context) {
+                        return logoutDiolog( context: context, model: model);
+                      },);
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Palete.lightGrey,
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                      padding: EdgeInsets.symmetric(vertical: 14.h),
                     ),
                     child: Text(
                       'Logout',
                       style: TextStyle(
-                        color: Colors.red,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
                         fontFamily: FontFamily.poppins,
-                        fontSize: 14.sp,
                       ),
                     ),
                   ),
                 ),
-
-                SizedBox(height: 30.h),
               ],
             ),
           ),
         );
       },
       viewModelBuilder: () => ProfileViewModel(
-          apiservice: Provider.of(context),
-          bottomnavViewmodel: Provider.of(context)),
+        apiservice: Provider.of(context),
+        bottomnavViewmodel: Provider.of(context),
+      ),
     );
   }
-}
 
-class DetailWidget extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  final Color? iconColor;
-
-  const DetailWidget({
-    required this.text,
-    required this.icon,
-    this.iconColor,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
-      decoration: BoxDecoration(
-        color: Palete.lightGrey,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: iconColor ?? Palete.black,
-            size: 22.w,
-          ),
-          SizedBox(width: 15.w),
-          Expanded(
-            child: Text(
+  Widget _buildMenuButton({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 20.w, color: Palete.primaryColor),
+            SizedBox(width: 20.w),
+            Text(
               text,
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w500,
                 fontFamily: FontFamily.poppins,
               ),
             ),
-          ),
-        ],
+            const Spacer(),
+            Icon(Icons.chevron_right, size: 24.w, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }

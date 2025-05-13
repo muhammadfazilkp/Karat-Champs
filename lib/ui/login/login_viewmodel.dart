@@ -4,6 +4,9 @@ import 'package:karatte_kid/service/apiservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../constant/app_constant.dart';
+import '../../service/navigation_srvices.dart';
+
 class LoginViewmodel extends BaseViewModel {
   LoginViewmodel({required Apiservice apiservice}) : _apiservice = apiservice;
 
@@ -20,6 +23,9 @@ class LoginViewmodel extends BaseViewModel {
   Future<void> login(String username, String passcode) async {
     loginResponse = await runBusyFuture(_apiservice.login(username, passcode));
     isLogedIn = true;
+    if (loginResponse !=null)  {
+      navigationService.pushNamedAndRemoveUntil(RoutePaths.bottonav);
+    }
     debugPrint('Loginresponse: $loginResponse');
     notifyListeners();
   }

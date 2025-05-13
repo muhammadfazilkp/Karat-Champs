@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/ui/home/homeview.dart';
 import 'package:karatte_kid/ui/login/loginview.dart';
+import 'package:karatte_kid/ui/register/register_view.dart';
 import 'package:karatte_kid/ui/splash/splash_view.dart';
-import 'package:karatte_kid/ui/student_entrolling/student_entroling_view.dart';
+import 'package:karatte_kid/ui/institute_entrolling/institute_entroling_view.dart';
 import 'package:karatte_kid/ui/class_view/class_view.dart';
 
 import '../ui/bottom_nav/bottmnav_view.dart';
@@ -34,6 +35,11 @@ class PageRouter {
             builder: (context) => const StudentEntrolingView(),
             settings: settings);
 
+      case RoutePaths.studentRegistrationView:
+        return MaterialPageRoute(
+          builder: (context) => const RegisterView(),
+          settings: settings,
+        );
       case RoutePaths.studentListView:
         return MaterialPageRoute(
             builder: (context) => const ClassView(), settings: settings);

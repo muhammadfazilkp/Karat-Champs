@@ -23,8 +23,10 @@ class SplsahViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+
   Future<void> init() async {
     loginCheck();
+    await _apiservice.loadFromPrefs();
     await _apiservice.getKeys();
   }
 }

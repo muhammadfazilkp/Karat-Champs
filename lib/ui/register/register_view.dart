@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/app/utils.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
+import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/register/register_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../widgets/diologs.dart';
+import '../belt_listing/belt_listview.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
@@ -30,7 +34,9 @@ class RegisterView extends StatelessWidget {
                   fontSize: 18.sp),
             ),
             leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  navigationService.goBack(result: false);
+                },
                 icon: const Icon(
                   Icons.arrow_back_ios_new_outlined,
                   size: 25,
@@ -78,6 +84,14 @@ class RegisterView extends StatelessWidget {
                     ),
                     CustomTextfileld(
                       hintText: 'Phone number',
+                      validator: (p0) {
+                        if (p0 == null || p0.isEmpty) {
+                          return 'Required field';
+                        } else if (p0.length <10) {
+                          return 'Phone number must be 10 digits';
+                        }
+                        return null;
+                      },
                       type: TextInputType.phone,
                       controller: model.phone,
                     ),
@@ -85,6 +99,25 @@ class RegisterView extends StatelessWidget {
                       height: 10.sp,
                     ),
                     CustomTextfileld(
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                        onTap: () {
+                          model.selectDate(context);
+                        },
+                        readOnly: false,
+                        hintText: 'Select Registration Date',
+                        type: TextInputType.phone,
+                        controller: model.registerDate),
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    CustomTextfileld(
+                      suffixIcon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black,
+                      ),
                       readOnly: true,
                       onTap: () {
                         showModalBottomSheet(
@@ -102,25 +135,104 @@ class RegisterView extends StatelessWidget {
                       type: TextInputType.streetAddress,
                       controller: model.institute,
                     ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomTextfileld(
+                      hintText: 'Gurdian Name',
+                      type: TextInputType.emailAddress,
+                      controller: model.email,
+                      validator: (email) {
+                        return validateEmail(email);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomTextfileld(
+                            suffixIcon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black,
+                            ),
+                            readOnly: false,
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return BeltSelector(
+                                      selectedBelt: model.belt.text,
+                                      onSelected: (selectedBelt) {
+                                        model.belt.text = selectedBelt;
+                                        model.notifyListeners();
+                                      });
+                                },
+                              );
+                            },
+                            hintText: 'Select Belt',
+                            type: TextInputType.text,
+                            controller:
+                                TextEditingController(text: model.belt.text),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: CustomTextfileld(
+                            suffixIcon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black,
+                            ),
+                            readOnly: true,
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => selectRelation(
+                                  gurdianList: model.guardian?.data ?? [],
+                                  context: context,
+                                  title: 'Select Relation',
+                                  selectedRelation: model.reletion.text,
+                                  onSelected: (selected) {
+                                    model.reletion.text = selected;
+                                    model.notifyListeners();
+                                  },
+                                ),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20)),
+                                ),
+                              );
+                            },
+                            hintText: 'Select Relation',
+                            type: TextInputType.text,
+                            controller: TextEditingController(
+                                text: model.reletion.text),
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(
                       height: 30.sp,
                     ),
                     GestureDetector(
                       onTap: () {
+                        model.isBusy;
                         if (model.formKey.currentState!.validate()) {
                           model.register(
                               name: model.fullname.text,
                               email: model.email.text,
                               phone: model.phone.text,
                               institute: model.institute.text);
+                          navigationService.goBack(result: true);
                         }
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 70.sp),
-                        height: 50,
+                        margin: EdgeInsets.symmetric(horizontal: 10.sp),
+                        height: 55.sp,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(3),
                           color: Colors.white,
                         ),
                         child: Center(
@@ -129,7 +241,7 @@ class RegisterView extends StatelessWidget {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: FontFamily.poppins,
-                                fontSize: 13.sp,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -154,6 +266,7 @@ class CustomTextfileld extends StatelessWidget {
     this.validator,
     this.onTap,
     this.readOnly = false,
+    this.suffixIcon,
     super.key,
   });
   final String hintText;
@@ -162,14 +275,16 @@ class CustomTextfileld extends StatelessWidget {
   final String? Function(String?)? validator;
   final VoidCallback? onTap;
   final bool readOnly;
+  final Widget? suffixIcon;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12),
-      height: 60.sp,
+      height: 55.sp,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22), color: Colors.white),
+          borderRadius: BorderRadius.circular(2), color: Colors.white),
       child: TextFormField(
         onTap: onTap,
         controller: controller,
@@ -182,6 +297,7 @@ class CustomTextfileld extends StatelessWidget {
             },
         keyboardType: type,
         decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           hintText: hintText,

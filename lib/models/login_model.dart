@@ -50,6 +50,7 @@ class UserDetails {
   final String? gender;
   final String? roleProfileName;
   final int enabled;
+  final bool isAdmin ;
 
   UserDetails({
     required this.name,
@@ -60,6 +61,7 @@ class UserDetails {
     this.gender,
     this.roleProfileName,
     required this.enabled,
+     required this.isAdmin
   });
 
   factory UserDetails.fromJson(Map<String, dynamic> json) {
@@ -72,6 +74,20 @@ class UserDetails {
       gender: json['gender'],
       roleProfileName: json['role_profile_name'],
       enabled: json['enabled'],
+      isAdmin: json['is_admin'] == 1 ? true : false,
     );
+  }
+   Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'mobile_no': mobileNo,
+      'gender': gender,
+      'role_profile_name': roleProfileName,
+      'enabled': enabled,
+      'is_admin': isAdmin ? 1 : 0, 
+    };
   }
 }
