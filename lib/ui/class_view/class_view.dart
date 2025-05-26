@@ -7,6 +7,8 @@ import 'package:karatte_kid/ui/details/details_view.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../widgets/model_future_builder.dart';
+
 class ClassView extends StatelessWidget {
   const ClassView({super.key});
 
@@ -22,87 +24,98 @@ class ClassView extends StatelessWidget {
             title: Text(
               "Institute View",
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.sp,
-                  fontFamily: FontFamily.poppins),
+                color: Colors.white,
+                fontSize: 18.sp,
+                fontFamily: FontFamily.poppins,
+              ),
             ),
             leading: IconButton(
               onPressed: () {
                 navigationService.goBack(result: true);
               },
-              icon: const  Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 24,
               ),
             ),
           ),
-          body: viewModel.isBusy
-              ? const Center(
-                  child: CircularProgressIndicator(
-                  color: Colors.white,
-                ))
-              : viewModel.classModel == null
-                  ? const Center(
-                      child: Text(
-                      'No Institute found',
-                      style: TextStyle(color: Colors.white),
-                    ))
-                  : Column(
-                      children: [
-                        SizedBox(
-                          height: 10.sp,
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: viewModel.classModel!.data.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  viewModel.getInstituteClassDetails(
-                                      institute: viewModel
-                                          .classModel!.data[index].name);
+          body: ModelFutureBuilder(
+            busy: viewModel.isBusy,
+            data: viewModel.classModel,
+            loading: const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            ),
+            error: const Center(
+              child: Text(
+                'No Institute found',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            builder: (context, data, _) {
+              if (data.data.isEmpty) {
+                return const Center(
+                  child: Text(
+                    'No Institute found',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              }
+              return Column(
+                children: [
+                  SizedBox(height: 10.sp),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: data.data.length,
+                      itemBuilder: (context, index) {
+                        final institute = data.data[index];
+                        return GestureDetector(
+                          onTap: () {
+                            viewModel.getInstituteClassDetails(
+                                institute: institute.name);
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailsView(
-                                          instituteName: viewModel
-                                              .classModel!.data[index].name,
-                                        ),
-                                      ));
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 4),
-                                  height: 70,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        viewModel.classModel!.data[index].name,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600),
-                                      )
-                                    ],
-                                  ),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsView(
+                                  instituteName: institute.name,
                                 ),
-                              );
-                            },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            height: 130,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/karete_institute_image.jpg'),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(38),
+                            ),
+                            child: Center(
+                              child: Text(
+                                institute.name,
+                                style: TextStyle(
+                                  color: Colors.yellowAccent,
+                                  fontFamily: FontFamily.bigowl,
+                                  fontSize: 23.sp,
+                                  fontWeight: FontWeight.w200,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
+                  ),
+                ],
+              );
+            },
+          ),
         );
       },
       viewModelBuilder: () => ClassViewModel(

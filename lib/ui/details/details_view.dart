@@ -18,38 +18,55 @@ class DetailsView extends StatelessWidget {
       builder: (context, model, _) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Institute Details'),
+            title: const Text('Students Details'),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.pop(context),
             ),
           ),
-          body: model.isBusy
-              ? const Center(child: CircularProgressIndicator())
-              : model.studentDetails == null || model.studentDetails!.data == null
-                  ? const Center(child: Text('No student details found'))
-                  : SingleChildScrollView(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildDetailItem('Full Name', model.studentDetails!.data!.fullName ?? 'N/A'),
-                          _buildDetailItem('Email', model.studentDetails!.data!.email ?? 'N/A'),
-                          _buildDetailItem('Phone', model.studentDetails!.data!.phone ?? 'N/A'),
-                          _buildDetailItem('Institute', model.studentDetails!.data!.institute ?? 'N/A'),
-                          _buildDetailItem('Enrollment Date', model.studentDetails!.data!.enrollmentDate ?? 'N/A'),
-                          _buildDetailItem('Registration Date', model.studentDetails!.data!.registrationDate ?? 'N/A'),
-                          _buildDetailItem('Belt Change Date', model.studentDetails!.data!.beltChangeDate ?? 'N/A'),
-                          _buildDetailItem('Status', (model.studentDetails!.data!.active ?? 0) == 1 ? 'Active' : 'Inactive'),
-                        ],
-                      ),
-                    ),
+          body:  model.isBusy
+    ? const Center(child: CircularProgressIndicator())
+    : model.studentDetails == null || model.studentDetails!.data == null
+            ? const Center(child: Text('No student details found'))
+
+                 : ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: model.studentDetails!.data!.length,
+            itemBuilder: (context, index) {
+              final student = model.studentDetails!.data![index];
+
+              return Card(
+                elevation: 3,
+                margin: const EdgeInsets.only(bottom: 16),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildDetailItem('Full Name', student.fullName ?? 'N/A'),
+                      buildDetailItem('Email', student.email ?? 'N/A'),
+                      buildDetailItem('Phone', student.phone ?? 'N/A'),
+                      buildDetailItem('Institute', student.institute ?? 'N/A'),
+                      buildDetailItem('Belt', student.belt?? 'White'),
+                        buildDetailItem('Gurdian', student.guardianName?? ''),
+                      // _buildDetailItem('Enrollment Date', student.enrollmentDate ?? 'N/A'),
+                      buildDetailItem('Registration Date', student.registrationDate ?? 'N/A'),
+                      // _buildDetailItem('Belt Change Date', student.beltChangeDate ?? 'N/A'),
+                    ],
+                  ),
+                ),
+              );
+            }
+              )
+              )
+              ;
+            }
         );
-      },
-    );
+      }
+    
   }
 
-  Widget _buildDetailItem(String label, String value) {
+  Widget buildDetailItem(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -59,7 +76,7 @@ class DetailsView extends StatelessWidget {
             label,
             style: const TextStyle(
               fontSize: 14,
-              color: Colors.grey,
+              color: Colors.black,
             ),
           ),
           const SizedBox(height: 4),
@@ -67,7 +84,7 @@ class DetailsView extends StatelessWidget {
             value,
             style: const TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -76,4 +93,3 @@ class DetailsView extends StatelessWidget {
       ),
     );
   }
-}

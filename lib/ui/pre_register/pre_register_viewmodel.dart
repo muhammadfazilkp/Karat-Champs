@@ -4,9 +4,9 @@ import 'package:stacked/stacked.dart';
 
 import '../../models/login_model.dart';
 
-class DetailsViewmodel extends BaseViewModel {
-  DetailsViewmodel({required Apiservice apiservice}) : _apiservice = apiservice;
-
+class PreRegisterViewmodel extends BaseViewModel {
+  PreRegisterViewmodel({required Apiservice apiservice})
+      : _apiservice = apiservice;
   final Apiservice _apiservice;
   StudentDetails? studentDetails;
   UserDetails? get user => _apiservice.user;

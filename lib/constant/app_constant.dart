@@ -11,6 +11,7 @@ abstract class RoutePaths {
 
 abstract class FontFamily {
   static String poppins = 'Poppins';
+  static String bigowl ='Bigowl';
 }
 
 abstract class Pref {

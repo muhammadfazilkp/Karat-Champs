@@ -7,7 +7,6 @@ import 'package:karatte_kid/ui/login/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../service/navigation_srvices.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});

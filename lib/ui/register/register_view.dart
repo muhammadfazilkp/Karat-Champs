@@ -11,7 +11,8 @@ import '../../widgets/diologs.dart';
 import '../belt_listing/belt_listview.dart';
 
 class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+  const RegisterView({required this.institute, super.key});
+  final String? institute;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class RegisterView extends StatelessWidget {
       viewModelBuilder: () =>
           RegisterViewmodel(apiservice: Provider.of(context)),
       builder: (context, model, _) {
+        debugPrint("Institute: $institute");
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 70.sp,
@@ -87,7 +89,7 @@ class RegisterView extends StatelessWidget {
                       validator: (p0) {
                         if (p0 == null || p0.isEmpty) {
                           return 'Required field';
-                        } else if (p0.length <10) {
+                        } else if (p0.length < 10) {
                           return 'Phone number must be 10 digits';
                         }
                         return null;
@@ -113,38 +115,38 @@ class RegisterView extends StatelessWidget {
                     SizedBox(
                       height: 10.sp,
                     ),
-                    CustomTextfileld(
-                      suffixIcon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
-                      ),
-                      readOnly: true,
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) =>
-                              selecTingWidget(model: model, context: context),
-                          isScrollControlled: true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(20)),
-                          ),
-                        );
-                      },
-                      hintText: 'Select Institute',
-                      type: TextInputType.streetAddress,
-                      controller: model.institute,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    // CustomTextfileld(
+                    //   suffixIcon: const Icon(
+                    //     Icons.arrow_drop_down,
+                    //     color: Colors.black,
+                    //   ),
+                    //   readOnly: true,
+                    //   onTap: () {
+                    //     showModalBottomSheet(
+                    //       context: context,
+                    //       builder: (context) =>
+                    //           selecTingWidget(model: model, context: context),
+                    //       isScrollControlled: true,
+                    //       shape: const RoundedRectangleBorder(
+                    //         borderRadius:
+                    //             BorderRadius.vertical(top: Radius.circular(20)),
+                    //       ),
+                    //     );
+                    //   },
+                    //   hintText: 'Select Institute',
+                    //   type: TextInputType.streetAddress,
+                    //   controller: model.institute,
+                    // ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
                     CustomTextfileld(
                       hintText: 'Gurdian Name',
                       type: TextInputType.emailAddress,
-                      controller: model.email,
-                      validator: (email) {
-                        return validateEmail(email);
-                      },
+                      controller: model.gurdian,
+                      // validator: (email) {
+                      //   return validateEmail(email);
+                      // },
                     ),
                     const SizedBox(
                       height: 15,
@@ -220,10 +222,16 @@ class RegisterView extends StatelessWidget {
                         model.isBusy;
                         if (model.formKey.currentState!.validate()) {
                           model.register(
-                              name: model.fullname.text,
-                              email: model.email.text,
-                              phone: model.phone.text,
-                              institute: model.institute.text);
+                            name: model.fullname.text,
+                            email: model.email.text,
+                            phone: model.phone.text,
+                            institute: institute.toString(),
+                            belt: model.belt.text,
+                            date:
+                                "${model.selectedDate.year}-${model.selectedDate.month.toString().padLeft(2, '0')}-${model.selectedDate.day.toString().padLeft(2, '0')}",
+                            gurdianName: model.gurdian.text,
+                            relation: model.reletion.text
+                          );
                           navigationService.goBack(result: true);
                         }
                       },
@@ -232,7 +240,7 @@ class RegisterView extends StatelessWidget {
                         height: 55.sp,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
+                          borderRadius: BorderRadius.circular(28),
                           color: Colors.white,
                         ),
                         child: Center(
@@ -284,7 +292,7 @@ class CustomTextfileld extends StatelessWidget {
       height: 55.sp,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2), color: Colors.white),
+          borderRadius: BorderRadius.circular(28), color: Colors.white),
       child: TextFormField(
         onTap: onTap,
         controller: controller,
@@ -364,4 +372,10 @@ Widget selecTingWidget(
       );
     },
   );
+}
+
+class RegisterViewArguments {
+  final String institute;
+
+  RegisterViewArguments(this.institute);
 }

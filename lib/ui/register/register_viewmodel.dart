@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:karatte_kid/models/belt_model.dart';
 import 'package:karatte_kid/service/apiservice.dart';
 import 'package:stacked/stacked.dart';
@@ -17,6 +18,7 @@ class RegisterViewmodel extends BaseViewModel {
   final TextEditingController reletion = TextEditingController();
   final TextEditingController belt = TextEditingController();
   final TextEditingController registerDate = TextEditingController();
+  final gurdian = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
 
@@ -33,12 +35,17 @@ class RegisterViewmodel extends BaseViewModel {
       {required String name,
       required String email,
       required String phone,
-      required String institute}) async {
+      required String institute,
+      required String belt,
+      required String date,
+      required String gurdianName,
+      required String relation,
+    
+      }) async {
     final status = await runBusyFuture(_apiservice.getStudentResorce(
-        fullname: name, email: email, phone: phone, institute: institute));
-    // if (status == true) {
-
-    // }
+        fullname: name, email: email, phone: phone, institute: institute, 
+        belt: belt,enrollmentDate: date,gurdianName:gurdianName, guardianRelationship: relation
+        ));
   }
 
   Future<void> init() async {
@@ -55,7 +62,8 @@ class RegisterViewmodel extends BaseViewModel {
     );
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
-        registerDate.text = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+      registerDate.text =
+          "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
 
       notifyListeners();
     }

@@ -128,13 +128,15 @@ class StudentEntrolingView extends StatelessWidget {
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 12.4),
                               decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
                                 border: Border.all(color: Colors.grey),
                               ),
                               child: TextFormField(
                                 decoration: const InputDecoration(
+                                  
                                   hintText: 'Add your  address....',
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.all(10),
+                                  contentPadding: EdgeInsets.all(13),
                                 ),
                                 maxLines: 4,
                               ),

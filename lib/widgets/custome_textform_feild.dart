@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
       margin: EdgeInsets.only(left: 5.0, right: 5.0, top: top),
       padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(28),
           // borderRadius: BorderRadius.circular(18),
 
           color: const Color.fromARGB(255, 218, 214, 214)),
@@ -51,11 +51,11 @@ class CustomTextField extends StatelessWidget {
         maxLines: maxLines,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(18),
             borderSide: const BorderSide(color: Colors.transparent),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(18),
             borderSide: const BorderSide(color: Colors.transparent),
           ),
           hintText: hint,

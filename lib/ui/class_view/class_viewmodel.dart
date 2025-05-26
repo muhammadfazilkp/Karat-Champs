@@ -27,9 +27,7 @@ class ClassViewModel extends BaseViewModel {
 
   Future<void> getInstituteClassDetails({required String institute}) async {
     studentDetails = await runBusyFuture(_apiservice.getStudentDetails(
-        name: user!.name,
-        email: user!.email,
-        phone: '9074957353',
+      
         institute: institute));
 
     notifyListeners();

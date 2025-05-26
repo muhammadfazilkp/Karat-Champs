@@ -1,15 +1,17 @@
 
 class StudentDetails {
-  Data? data;
+  List<Data>? data;
 
   StudentDetails({this.data});
+
   StudentDetails.fromJson(Map<String, dynamic> json) {
-    data = json["data"] == null ? null : Data.fromJson(json["data"]);
+    data = json["data"] == null ? null : (json["data"] as List).map((e) => Data.fromJson(e)).toList();
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     if(data != null) {
-      _data["data"] = data?.toJson();
+      _data["data"] = data?.map((e) => e.toJson()).toList();
     }
     return _data;
   }
@@ -29,11 +31,14 @@ class Data {
   String? institute;
   String? enrollmentDate;
   int? active;
+  dynamic guardianName;
+  dynamic guardianPhone;
+  dynamic guardianRelationship;
   String? registrationDate;
+  dynamic belt;
   String? beltChangeDate;
-  String? doctype;
 
-  Data({this.name, this.owner, this.creation, this.modified, this.modifiedBy, this.docstatus, this.idx, this.fullName, this.email, this.phone, this.institute, this.enrollmentDate, this.active, this.registrationDate, this.beltChangeDate, this.doctype});
+  Data({this.name, this.owner, this.creation, this.modified, this.modifiedBy, this.docstatus, this.idx, this.fullName, this.email, this.phone, this.institute, this.enrollmentDate, this.active, this.guardianName, this.guardianPhone, this.guardianRelationship, this.registrationDate, this.belt, this.beltChangeDate});
 
   Data.fromJson(Map<String, dynamic> json) {
     name = json["name"];
@@ -49,9 +54,12 @@ class Data {
     institute = json["institute"];
     enrollmentDate = json["enrollment_date"];
     active = json["active"];
+    guardianName = json["guardian_name"];
+    guardianPhone = json["guardian_phone"];
+    guardianRelationship = json["guardian_relationship"];
     registrationDate = json["registration_date"];
+    belt = json["belt"];
     beltChangeDate = json["belt_change_date"];
-    doctype = json["doctype"];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,9 +77,12 @@ class Data {
     _data["institute"] = institute;
     _data["enrollment_date"] = enrollmentDate;
     _data["active"] = active;
+    _data["guardian_name"] = guardianName;
+    _data["guardian_phone"] = guardianPhone;
+    _data["guardian_relationship"] = guardianRelationship;
     _data["registration_date"] = registrationDate;
+    _data["belt"] = belt;
     _data["belt_change_date"] = beltChangeDate;
-    _data["doctype"] = doctype;
     return _data;
   }
 }

@@ -36,8 +36,10 @@ class PageRouter {
             settings: settings);
 
       case RoutePaths.studentRegistrationView:
+        final args = settings.arguments as RegisterViewArguments?;
+
         return MaterialPageRoute(
-          builder: (context) => const RegisterView(),
+          builder: (context) => RegisterView(institute: args?.institute ?? ''),
           settings: settings,
         );
       case RoutePaths.studentListView:

@@ -93,6 +93,10 @@ flutter:
          - asset: assets\fonts\Poppins-Light.ttf
          - asset: assets\fonts\Poppins-Regular.ttf
          - asset: assets\fonts\Poppins-SemiBold.ttf
+     - family: BigOwl
+       fonts:
+        - asset: assets/fonts/Big Owl Regular.ttf
+        - asset:  assets/fonts/Big Owl Regular.otf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

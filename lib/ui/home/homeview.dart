@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karatte_kid/constant/app_constant.dart';
 import 'package:karatte_kid/service/navigation_srvices.dart';
 import 'package:karatte_kid/ui/home/home_viewmodel.dart';
+import 'package:karatte_kid/ui/institution_listing/institution_listing_view.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-
 
 class Homeview extends StatelessWidget {
   const Homeview({super.key});
@@ -199,65 +199,68 @@ class Homeview extends StatelessWidget {
                   ),
                   viewModel.user?.isAdmin == true
                       ? Container(
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: 10,),
-                        height: 50.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                // blurRadius: 1,
-                                offset: const Offset(0, 3),
-                                color: Colors.grey.withOpacity(0.3),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(1),
-                            color: Colors.white),
-                        child: TextButton.icon(
-                          icon: const Icon(Icons.person_add),
-                          onPressed: () {
-                            navigationService.pushNamed(
-                                RoutePaths.studentRegistrationView);
-                          },
-                          label: Text(
-                            "Add Instrector",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: FontFamily.poppins,
-                                fontSize: 9),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 10,
                           ),
-                        ),
-                      )
+                          height: 50.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  // blurRadius: 1,
+                                  offset: const Offset(0, 3),
+                                  color: Colors.grey.withOpacity(0.3),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(28),
+                              color: Colors.white),
+                          child: TextButton.icon(
+                            icon: const Icon(Icons.person_add),
+                            onPressed: () {
+                              navigationService.pushNamed(
+                                  RoutePaths.studentRegistrationView);
+                            },
+                            label: Text(
+                              "Add Student",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: FontFamily.poppins,
+                                  fontSize: 12.sp),
+                            ),
+                          ),
+                        )
                       : Container(
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: 10,),
-                        height: 50.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                // blurRadius: 1,
-                                offset: const Offset(0, 3),
-                                color: Colors.grey.withOpacity(0.3),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(1),
-                            color: Colors.white),
-                        child: TextButton.icon(
-                          icon: const Icon(Icons.person_add),
-                          onPressed: () {
-                            navigationService.pushNamed(
-                                RoutePaths.studentView);
-                          },
-                          label: Text(
-                            "Entroll Student",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: FontFamily.poppins,
-                                fontSize: 9),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          height: 50.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  // blurRadius: 1,
+                                  offset: const Offset(0, 3),
+                                  color: Colors.grey.withOpacity(0.3),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(28),
+                              color: Colors.white),
+                          child: TextButton.icon(
+                            icon: const Icon(Icons.person_add),
+                            onPressed: () {
+                              // navigationService
+                              //     .pushNamed(RoutePaths.studentView);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>  const  InstitutionListingView(),));
+                            },
+                            label: Text(
+                              "Entroll Institute",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: FontFamily.poppins,
+                                  fontSize: 9),
+                            ),
                           ),
                         ),
-                      ),
                 ],
               ),
             ),

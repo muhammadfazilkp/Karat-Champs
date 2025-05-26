@@ -243,13 +243,17 @@ class Apiservice extends ChangeNotifier {
     return classModel;
   }
 
-  Future<bool?> getStudentResorce({
-    required String fullname,
-    required String email,
-    required String phone,
-    required String institute,
-  }) async {
+  Future<bool?> getStudentResorce(
+      {required String fullname,
+      required String email,
+      required String phone,
+      required String institute,
+      required String enrollmentDate,
+      required String gurdianName,
+      required String belt,
+      required String guardianRelationship}) async {
     bool status = false;
+    Students? students;
 
     try {
       debugPrint('Apikey&Scret:  $loginKey  secretKey:$loginSecretKey ');
@@ -264,6 +268,10 @@ class Apiservice extends ChangeNotifier {
         "email": email,
         "phone": phone,
         "institute": institute,
+        'guardian_name': gurdianName,
+        'registration_date': enrollmentDate,
+        'belt': belt,
+        'guardian_relationship': guardianRelationship
       });
 
       final response = await http.post(
@@ -274,9 +282,12 @@ class Apiservice extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         debugPrint("Resgister Full Response : ---> ${response.body}");
+        final jsonData = jsonDecode(response.body);
         status = true;
-                showToast('registeretion completed  successfully', color: Colors.green);
+        students = Students.fromJson(jsonData);
+        debugPrint('${students.data?.fullName}');
 
+        showToast('registeretion completed  successfully', color: Colors.green);
       } else {
         debugPrint(
             "Failed to post student resource. Status code: ${response.statusCode}");
@@ -347,28 +358,28 @@ class Apiservice extends ChangeNotifier {
   }
 
   Future<StudentDetails?> getStudentDetails({
-    required String name,
-    required String phone,
-    required String email,
+    // required String name,
+    // required String phone,
+    // required String email,
     required String institute,
   }) async {
     StudentDetails? studentDetails;
     try {
+      // final requestBody = {
+      //   'full_name': name,
+      //   'email': email,
+      //   'phone': phone,
+      //   'institute': institute,
+      // };
+      // debugPrint("Request Body: ${jsonEncode(requestBody)}");
 
-       final requestBody = {
-      'full_name': name,
-      'email': email,
-      'phone': phone,
-      'institute': institute,
-    };
-     debugPrint("Request Body: ${jsonEncode(requestBody)}");
-      
       final response = await client
-          .post(
-              Uri.parse(
-                  '$baseUrl/api/resource/Student?filters=[[%22institute%22,%20%22=%22,%20%22$institute%22]]'),
-              headers: userHeader,
-              body: jsonEncode(requestBody))
+          .get(
+            Uri.parse(
+                '$baseUrl/api/resource/Student?filters=[[%22institute%22,%20%22=%22,%20%22$institute%22]]&fields=["*"]'),
+            headers: userHeader,
+            // body: jsonEncode(requestBody)
+          )
           .timeout(
             timeoutDuration,
             onTimeout: () => http.Response("Request Timeout", 408),
